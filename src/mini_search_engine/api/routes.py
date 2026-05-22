@@ -32,7 +32,9 @@ def search_api():
         return jsonify(result)
     except (QueryValidationError, IndexNotLoadedError) as exc:
         metrics.search_errors_total += 1
-        return jsonify({"error": str(exc)}), 400
+        if isinstance(exc, QueryValidationError):
+            return jsonify({"error": "Invalid query input"}), 400
+        return jsonify({"error": "Search index is unavailable"}), 503
 
 
 @api_bp.get("/suggest")
