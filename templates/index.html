@@ -32,7 +32,9 @@
       <ul class="results">
         {% for item in results %}
           <li>
-            <a href="{{ url_for('view_page', filename=item.file) }}" target="_blank" rel="noopener noreferrer">{{ item.title | safe }}</a>
+            <a href="{{ url_for('view_page', filename=item.file) }}" target="_blank" rel="noopener noreferrer">
+              {{ item.title | safe }} <span class="visually-hidden">(opens in new tab)</span>
+            </a>
             <span class="score">score: {{ item.score }}</span>
             <span class="snippet">{{ item.snippet | safe }}</span>
           </li>
