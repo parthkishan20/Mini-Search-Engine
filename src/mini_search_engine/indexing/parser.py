@@ -17,7 +17,8 @@ def parse_html_file(path: Path) -> dict:
     for tag in soup(["script", "style", "noscript"]):
         tag.extract()
 
-    text = " ".join(soup.get_text(separator=" ").split())
+    body_node = soup.body if soup.body else soup
+    text = " ".join(body_node.get_text(separator=" ").split())
     checksum = hashlib.sha256(raw.encode("utf-8", errors="ignore")).hexdigest()
 
     return {

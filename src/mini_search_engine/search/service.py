@@ -8,7 +8,7 @@ from mini_search_engine.config import AppConfig
 from mini_search_engine.indexing.analyzer import Analyzer
 from mini_search_engine.ranking.bm25 import BM25Ranker
 from mini_search_engine.ranking.tf import TFRanker
-from mini_search_engine.search.query_parser import QueryValidationError, parse_query
+from mini_search_engine.search.query_parser import parse_query
 from mini_search_engine.search.snippets import build_snippet, highlight_text_safe
 
 
