@@ -6,6 +6,11 @@ from mini_search_engine.search.query_parser import QueryValidationError
 from mini_search_engine.search.service import IndexNotLoadedError
 
 api_bp = Blueprint("api", __name__, url_prefix="/api/v1")
+QUERY_ERROR_MESSAGES = {
+    "empty_query": "Query cannot be empty",
+    "query_too_long": "Query exceeds the maximum allowed length",
+    "no_searchable_terms": "Query has no searchable terms",
+}
 
 
 @api_bp.get("/search")
@@ -33,7 +38,8 @@ def search_api():
     except (QueryValidationError, IndexNotLoadedError) as exc:
         metrics.search_errors_total += 1
         if isinstance(exc, QueryValidationError):
-            return jsonify({"error": str(exc)}), 400
+            message = QUERY_ERROR_MESSAGES.get(exc.code, "Invalid query input")
+            return jsonify({"error": message}), 400
         return jsonify({"error": "Search index is unavailable"}), 503
 
 

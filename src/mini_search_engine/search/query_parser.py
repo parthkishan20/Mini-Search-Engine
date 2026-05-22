@@ -16,15 +16,17 @@ class ParsedQuery:
 
 
 class QueryValidationError(ValueError):
-    pass
+    def __init__(self, code: str) -> None:
+        super().__init__(code)
+        self.code = code
 
 
 def parse_query(query: str, analyzer: Analyzer, max_query_length: int) -> ParsedQuery:
     query = query.strip()
     if not query:
-        raise QueryValidationError("Query cannot be empty")
+        raise QueryValidationError("empty_query")
     if len(query) > max_query_length:
-        raise QueryValidationError(f"Query exceeds max length of {max_query_length}")
+        raise QueryValidationError("query_too_long")
 
     phrase_strings = PHRASE_RE.findall(query)
     phrases = [analyzer.tokenize(phrase) for phrase in phrase_strings if phrase.strip()]
@@ -33,6 +35,6 @@ def parse_query(query: str, analyzer: Analyzer, max_query_length: int) -> Parsed
     terms = analyzer.tokenize(query_wo_phrases)
 
     if not terms and not phrases:
-        raise QueryValidationError("Query has no searchable terms")
+        raise QueryValidationError("no_searchable_terms")
 
     return ParsedQuery(raw=query, terms=terms, phrases=[p for p in phrases if p])

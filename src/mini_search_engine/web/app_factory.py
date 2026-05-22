@@ -5,7 +5,7 @@ import time
 from collections import defaultdict, deque
 from pathlib import Path
 
-from flask import Flask, jsonify, render_template, request, send_from_directory
+from flask import Flask, g, jsonify, render_template, request, send_from_directory
 from flask_cors import CORS
 
 from mini_search_engine.api.routes import api_bp
@@ -70,11 +70,11 @@ def create_app(config: AppConfig | None = None) -> Flask:
 
     @app.before_request
     def _start_timer():
-        request._start_time = time.perf_counter()
+        g.start_time = time.perf_counter()
 
     @app.after_request
     def _log_request(response):
-        latency_ms = (time.perf_counter() - getattr(request, "_start_time", time.perf_counter())) * 1000
+        latency_ms = (time.perf_counter() - g.get("start_time", time.perf_counter())) * 1000
         logger.info(
             "request complete",
             extra={
