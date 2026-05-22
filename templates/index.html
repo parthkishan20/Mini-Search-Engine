@@ -4,66 +4,43 @@
   <meta charset="UTF-8">
   <title>Mini Search Engine</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Link to external stylesheet -->
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
-  <!-- Link to JS for dark mode toggle -->
-  <script src="{{ url_for('static', filename='toggle.js') }}"></script>
+  <script src="{{ url_for('static', filename='toggle.js') }}" defer></script>
 </head>
-
 <body>
-  <!-- Page Title -->
-  <h1>🔎 Mini Search Engine</h1>
+  <main class="container">
+    <header class="header">
+      <h1>🔎 Mini Search Engine</h1>
+      <button id="theme-toggle" type="button" class="secondary-btn">Toggle Dark Mode 🌙</button>
+    </header>
 
-  <!-- Dark Mode Toggle Button -->
-  <button onclick="toggleDarkMode()" style="margin-bottom: 1rem;">
-    Toggle Dark Mode 🌙
-  </button>
+    <form method="POST" class="search-form">
+      <label for="query" class="visually-hidden">Search query</label>
+      <input id="query" type="text" name="query" placeholder="Enter your search query..." value="{{ query }}" required>
+      <button type="submit">Search</button>
+    </form>
 
-  <!-- Search Form -->
-  <form method="POST">
-    <!-- Input for search query -->
-    <input type="text" name="query" placeholder="Enter your search query..." value="{{ query }}" required>
+    {% if error %}
+      <p class="error">{{ error }}</p>
+    {% endif %}
 
-    <!-- Submit button -->
-    <button type="submit">Search</button>
-  </form>
+    {% if query %}
+      <p class="result-count">{{ total }} result(s) for <strong>{{ query }}</strong></p>
+    {% endif %}
 
-  <!-- Recent Searches Section -->
-  {% if recent %}
-    <div style="margin-top: 1rem;">
-      <strong>🔁 Recent Searches:</strong>
-      <ul style="margin-top: 0.5rem; list-style: disc; padding-left: 1.5rem;">
-        {% for item in recent %}
-          <li>{{ item }}</li>
+    {% if results %}
+      <ul class="results">
+        {% for item in results %}
+          <li>
+            <a href="{{ url_for('view_page', filename=item.file) }}" target="_blank" rel="noopener noreferrer">{{ item.title | safe }}</a>
+            <span class="score">score: {{ item.score }}</span>
+            <span class="snippet">{{ item.snippet | safe }}</span>
+          </li>
         {% endfor %}
       </ul>
-    </div>
-  {% endif %}
-
-  <!-- Search Results Section -->
-  {% if results %}
-    <ul>
-      {% for title, score, snippet, file in results %}
-        <li>
-          <!-- Clickable Title -->
-          <a href="{{ url_for('view_page', filename=file) }}" target="_blank">
-            {{ title | safe }}
-          </a>
-
-          <!-- Score Badge -->
-          <span class="score">score: {{ score }}</span>
-
-          <!-- Snippet Preview -->
-          <span class="snippet">{{ snippet | safe }}</span>
-        </li>
-      {% endfor %}
-    </ul>
-
-  <!-- No Results Message -->
-  {% elif query %}
-    <p>No results found for "<strong>{{ query }}</strong>".</p>
-  {% endif %}
+    {% elif query and not error %}
+      <p>No results found.</p>
+    {% endif %}
+  </main>
 </body>
 </html>
