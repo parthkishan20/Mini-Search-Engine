@@ -51,7 +51,9 @@ def create_app(config: AppConfig | None = None) -> Flask:
     configure_logging()
     app_config = config or AppConfig()
 
-    app = Flask(__name__)
+    # Ensure Flask looks for templates/static at the repository root
+    project_root = Path(__file__).resolve().parents[3]
+    app = Flask(__name__, template_folder=str(project_root / "templates"), static_folder=str(project_root / "static"))
     app.secret_key = app_config.flask_secret_key
     app.config["MSE_DEFAULT_PAGE_SIZE"] = app_config.default_page_size
 
