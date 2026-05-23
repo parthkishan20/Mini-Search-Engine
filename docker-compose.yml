@@ -1,0 +1,11 @@
+services:
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      FLASK_SECRET_KEY: change-me
+      FLASK_DEBUG: "false"
+      MSE_INDEX_PATH: index_data/index.json
+    volumes:
+      - ./index_data:/app/index_data

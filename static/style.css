@@ -1,180 +1,185 @@
-/* =========================
-   General Base Styling
-   ========================= */
-   body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f7f9fc;
-    color: #333;
-    padding: 2rem;
-    line-height: 1.6;
-    transition: background 0.3s, color 0.3s;
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f7f9fc;
+  color: #333;
+  padding: 2rem;
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+h1 {
+  font-size: 2.25rem;
+  margin-bottom: 1rem;
+  color: #0b5394;
+}
+
+.search-form {
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+input[type='text'] {
+  flex: 1;
+  min-width: 280px;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+input[type='text']:focus {
+  border-color: #0b5394;
+  outline: none;
+  box-shadow: 0 0 5px rgba(11, 83, 148, 0.3);
+}
+
+button {
+  padding: 0.75rem 1.25rem;
+  background-color: #0b5394;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+button:hover {
+  background-color: #073763;
+}
+
+.secondary-btn {
+  background-color: #546e7a;
+}
+
+.secondary-btn:hover {
+  background-color: #37474f;
+}
+
+.error {
+  color: #b00020;
+}
+
+.result-count {
+  margin-bottom: 1rem;
+}
+
+.results {
+  list-style: none;
+  margin-top: 1rem;
+  padding: 0;
+}
+
+.results li {
+  background: #fff;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+a {
+  text-decoration: none;
+  color: #0b5394;
+  font-weight: bold;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.score {
+  background: #e2edfa;
+  color: #0b5394;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  margin-left: 0.5rem;
+}
+
+.snippet {
+  font-size: 0.95rem;
+  font-style: italic;
+  color: #555;
+  margin-top: 6px;
+  padding-left: 10px;
+  border-left: 3px solid #ddd;
+  line-height: 1.5;
+  display: block;
+}
+
+mark {
+  background-color: #fff59d;
+  border-radius: 4px;
+  padding: 0 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  margin: -1px;
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
   }
-  
-  /* Main Page Title */
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    color: #0b5394;
+
+  .search-form {
+    flex-direction: column;
   }
-  
-  /* =========================
-     Form Input Styling
-     ========================= */
-  form {
-    margin-bottom: 2rem;
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-  
-  /* Search input box */
-  input[type="text"] {
-    flex: 1;
-    min-width: 300px;
-    padding: 0.75rem 1rem;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 1rem;
-    transition: 0.2s ease;
-  }
-  
-  input[type="text"]:focus {
-    border-color: #0b5394;
-    outline: none;
-    box-shadow: 0 0 5px rgba(11, 83, 148, 0.3);
-  }
-  
-  /* Submit button */
+
+  input[type='text'],
   button {
-    padding: 0.75rem 1.5rem;
-    background-color: #0b5394;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: 0.2s ease;
+    width: 100%;
   }
-  
-  button:hover {
-    background-color: #073763;
-  }
-  
-  /* =========================
-     Search Result Cards
-     ========================= */
-  ul {
-    list-style-type: none;
-    margin-top: 1rem;
-  }
-  
-  li {
-    background: white;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-    transition: box-shadow 0.3s ease;
-  }
-  
-  li:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-  }
-  
-  /* =========================
-     Link and Score Badge
-     ========================= */
-  a {
-    text-decoration: none;
-    color: #0b5394;
-    font-weight: bold;
-  }
-  
-  a:hover {
-    text-decoration: underline;
-  }
-  
-  /* Score tag beside results */
-  .score {
-    background: #e2edfa;
-    color: #0b5394;
-    padding: 0.2rem 0.5rem;
-    font-size: 0.8rem;
-    border-radius: 4px;
-    margin-left: 0.5rem;
-  }
-  
-  /* =========================
-     Snippet Styling
-     ========================= */
-  .snippet {
-    font-size: 0.95rem;
-    font-style: italic;
-    color: #555;
-    margin-top: 6px;
-    padding-left: 10px;
-    border-left: 3px solid #ddd;
-    line-height: 1.5;
-    display: block;
-    max-width: 700px;
-  }
-  
-  /* Highlight matched query terms */
-  .highlight {
-    background-color: #fff59d;
-    font-weight: bold;
-    padding: 0 3px;
-    border-radius: 4px;
-  }
-  
-  /* =========================
-     Responsive Layout (Mobile)
-     ========================= */
-  @media (max-width: 600px) {
-    form {
-      flex-direction: column;
-    }
-  
-    input[type="text"],
-    button {
-      width: 100%;
-    }
-  }
-  
-  /* =========================
-     Dark Mode Styling
-     ========================= */
-  body.dark {
-    background: #121212;
-    color: #e0e0e0;
-  }
-  
-  body.dark h1 {
-    color: #90caf9;
-  }
-  
-  body.dark input[type="text"] {
-    background: #1e1e1e;
-    color: #fff;
-    border: 1px solid #555;
-  }
-  
-  body.dark li {
-    background: #1e1e1e;
-    box-shadow: 0 2px 6px rgba(255, 255, 255, 0.05);
-  }
-  
-  body.dark .score {
-    background: #263238;
-    color: #90caf9;
-  }
-  
-  body.dark a {
-    color: #90caf9;
-  }
-  
-  body.dark .highlight {
-    background-color: #fdd835;
-    color: #000;
-  }
-  
+}
+
+body.dark {
+  background: #121212;
+  color: #e0e0e0;
+}
+
+body.dark h1,
+body.dark a {
+  color: #90caf9;
+}
+
+body.dark input[type='text'] {
+  background: #1e1e1e;
+  color: #fff;
+  border-color: #555;
+}
+
+body.dark .results li {
+  background: #1e1e1e;
+}
+
+body.dark .score {
+  background: #263238;
+  color: #90caf9;
+}
+
+body.dark .snippet {
+  color: #ccc;
+}
